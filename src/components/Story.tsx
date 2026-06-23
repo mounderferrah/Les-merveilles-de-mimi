@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { useT } from '@/i18n';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -9,6 +10,7 @@ const fadeUp = {
 };
 
 export default function Story() {
+  const t = useT();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-15%' });
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
@@ -16,7 +18,7 @@ export default function Story() {
 
   return (
     <section
-      id="story"
+      id="histoire"
       ref={ref}
       className="relative py-32 md:py-48 px-6 overflow-hidden bg-[#FFFDF7]"
     >
@@ -25,7 +27,6 @@ export default function Story() {
         className="absolute inset-0 pointer-events-none"
         style={{ y: patternY }}
       >
-        {/* Large decorative text */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif font-light text-[#2E2118]/[0.025] select-none text-center leading-none"
           style={{ fontSize: 'clamp(8rem, 20vw, 22rem)' }}
@@ -33,7 +34,6 @@ export default function Story() {
           Mimi
         </div>
 
-        {/* Ornamental corners */}
         {['top-8 left-8', 'top-8 right-8', 'bottom-8 left-8', 'bottom-8 right-8'].map((pos, i) => (
           <div
             key={i}
@@ -59,7 +59,7 @@ export default function Story() {
         >
           <div className="w-8 h-px bg-[#FDC921]" />
           <span className="font-sans text-[10px] tracking-[0.5em] text-[#2E2118]/40 uppercase">
-            Notre Histoire
+            {t('story.label')}
           </span>
         </motion.div>
 
@@ -72,10 +72,10 @@ export default function Story() {
           transition={{ duration: 1, delay: 0.1 }}
         >
           <h2 className="font-serif font-light leading-[0.92]" style={{ fontSize: 'clamp(3rem, 8vw, 8rem)' }}>
-            13 Ans de{' '}
-            <span className="italic text-[#FDC921]">Douce</span>
+            {t('story.title_prefix')}{' '}
+            <span className="italic text-[#FDC921]">{t('story.title_italic')}</span>
             <br />
-            Tradition
+            {t('story.title_suffix')}
           </h2>
         </motion.div>
 
@@ -89,15 +89,13 @@ export default function Story() {
             transition={{ duration: 0.9, delay: 0.25 }}
           >
             <p className="font-sans text-base md:text-lg leading-[2] text-[#2E2118]/60">
-              Depuis plus de treize ans, Les Merveilles de Mimi crée des pâtisseries
-              traditionnelles et des gâteaux d&apos;exception, mêlant héritage,
-              élégance et savoir-faire artisanal.
+              {t('story.body1')}
             </p>
 
             <div className="mt-10 flex items-center gap-6">
               <div className="w-16 h-px bg-[#FDC921]" />
               <span className="font-serif italic text-sm text-[#2E2118]/40">
-                Fondé avec passion, 2012
+                {t('story.founded')}
               </span>
             </div>
           </motion.div>
@@ -110,14 +108,13 @@ export default function Story() {
             transition={{ duration: 0.9, delay: 0.4 }}
           >
             <p className="font-sans text-base md:text-lg leading-[2] text-[#2E2118]/60">
-              Chaque pièce est façonnée à la main avec passion et souci du détail,
-              transformant chaque célébration en un moment inoubliable.
+              {t('story.body2')}
             </p>
 
-            {/* Decorative quote */}
-            <blockquote className="mt-10 border-l-2 border-[#FDC921] pl-6">
+            {/* Decorative quote — rtl-border-flip class flips border side for Arabic */}
+            <blockquote className="mt-10 border-l-2 border-[#FDC921] pl-6 rtl-border-flip">
               <p className="font-serif italic text-xl md:text-2xl text-[#2E2118] leading-relaxed">
-                &ldquo;L&apos;art de la pâtisserie est l&apos;art de rendre les moments précieux.&rdquo;
+                &ldquo;{t('story.quote')}&rdquo;
               </p>
             </blockquote>
           </motion.div>

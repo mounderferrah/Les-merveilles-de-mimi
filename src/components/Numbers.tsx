@@ -2,12 +2,15 @@
 
 import { useRef, useEffect, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { useT } from '@/i18n';
 
-const stats = [
-  { value: 13, suffix: '+', label: 'Années d\'Expérience' },
-  { value: 1000, suffix: '+', label: 'Clients Satisfaits' },
-  { value: 3000, suffix: '+', label: 'Boîtes Livrées' },
-  { value: 100, suffix: '%', label: 'Fait Main' },
+type StatKey = 'years' | 'clients' | 'boxes' | 'handmade';
+
+const STATS: { value: number; suffix: string; key: StatKey }[] = [
+  { value: 16,   suffix: '+', key: 'years'    },
+  { value: 1000, suffix: '+', key: 'clients'  },
+  { value: 3000, suffix: '+', key: 'boxes'    },
+  { value: 100,  suffix: '%', key: 'handmade' },
 ];
 
 function Counter({ to, suffix, inView }: { to: number; suffix: string; inView: boolean }) {
@@ -33,12 +36,7 @@ function Counter({ to, suffix, inView }: { to: number; suffix: string; inView: b
     return () => clearInterval(timer);
   }, [inView, to]);
 
-  return (
-    <span>
-      {count}
-      {suffix}
-    </span>
-  );
+  return <span>{count}{suffix}</span>;
 }
 
 const card = {
@@ -51,6 +49,7 @@ const card = {
 };
 
 export default function Numbers() {
+  const t = useT();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-10%' });
 
@@ -77,15 +76,15 @@ export default function Numbers() {
         >
           <div className="w-8 h-px bg-[#FDC921]/40" />
           <span className="font-sans text-[10px] tracking-[0.5em] text-[#FDC921]/60 uppercase">
-            Notre Excellence
+            {t('numbers.label')}
           </span>
           <div className="w-8 h-px bg-[#FDC921]/40" />
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
-          {stats.map((stat, i) => (
+          {STATS.map((stat, i) => (
             <motion.div
-              key={stat.label}
+              key={stat.key}
               custom={i}
               variants={card}
               initial="hidden"
@@ -112,7 +111,7 @@ export default function Numbers() {
 
               {/* Label */}
               <p className="font-sans text-xs tracking-[0.25em] text-white/40 uppercase leading-relaxed">
-                {stat.label}
+                {t(`stat.${stat.key}`)}
               </p>
             </motion.div>
           ))}

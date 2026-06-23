@@ -2,7 +2,9 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { useT } from '@/i18n';
 
+// Reviews kept in French — authentic customer voices
 const reviews = [
   {
     name: 'Amira B.',
@@ -37,6 +39,7 @@ const reviews = [
 ];
 
 export default function Testimonials() {
+  const t = useT();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-10%' });
   const [current, setCurrent] = useState(0);
@@ -55,7 +58,7 @@ export default function Testimonials() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-[#2E2118]/[0.02] select-none pointer-events-none leading-none text-center whitespace-nowrap"
         style={{ fontSize: 'clamp(6rem, 18vw, 18rem)' }}
       >
-        Avis
+        {t('testimonials.bg')}
       </div>
 
       <div className="max-w-5xl mx-auto relative z-10">
@@ -69,7 +72,7 @@ export default function Testimonials() {
           <div className="flex items-center gap-4 justify-center mb-6">
             <div className="w-8 h-px bg-[#FDC921]" />
             <span className="font-sans text-[10px] tracking-[0.5em] text-[#2E2118]/40 uppercase">
-              Témoignages
+              {t('testimonials.label')}
             </span>
             <div className="w-8 h-px bg-[#FDC921]" />
           </div>
@@ -77,8 +80,8 @@ export default function Testimonials() {
             className="font-serif font-light"
             style={{ fontSize: 'clamp(2.2rem, 5vw, 5rem)' }}
           >
-            Ils nous font{' '}
-            <span className="italic text-[#FDC921]">confiance</span>
+            {t('testimonials.heading.main')}{' '}
+            <span className="italic text-[#FDC921]">{t('testimonials.heading.italic')}</span>
           </h2>
         </motion.div>
 
@@ -94,24 +97,23 @@ export default function Testimonials() {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="max-w-3xl text-center">
-                {/* Quote mark */}
                 <div className="font-serif text-[#FDC921] mb-6 leading-none" style={{ fontSize: '5rem' }}>
                   &ldquo;
                 </div>
 
-                <p className="font-serif italic text-[#2E2118] leading-relaxed mb-8"
-                  style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)' }}>
+                <p
+                  className="font-serif italic text-[#2E2118] leading-relaxed mb-8"
+                  style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)' }}
+                >
                   {reviews[current].text}
                 </p>
 
-                {/* Stars */}
                 <div className="flex items-center justify-center gap-1 mb-6">
                   {Array.from({ length: reviews[current].stars }).map((_, i) => (
                     <span key={i} className="text-[#FDC921] text-lg">★</span>
                   ))}
                 </div>
 
-                {/* Author */}
                 <div className="flex items-center justify-center gap-3">
                   <div className="w-6 h-px bg-[#FDC921]/50" />
                   <span className="font-sans text-sm tracking-[0.2em] text-[#2E2118]/60">
@@ -135,7 +137,7 @@ export default function Testimonials() {
               key={i}
               onClick={() => setCurrent(i)}
               className="transition-all duration-300"
-              aria-label={`Témoignage ${i + 1}`}
+              aria-label={`${t('testimonials.dot')} ${i + 1}`}
             >
               <div
                 className="rounded-full transition-all duration-300"

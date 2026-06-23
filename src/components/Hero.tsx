@@ -3,8 +3,11 @@
 import { useEffect, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import Link from 'next/link';
+import { useT, useLocale } from '@/i18n';
 
 export default function Hero() {
+  const t = useT();
+  const locale = useLocale();
   const videoRef = useRef<HTMLVideoElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -15,78 +18,19 @@ export default function Hero() {
     const video = videoRef.current;
     if (!video) return;
 
-    let rafId: number;
-    let lastTs: number | null = null;
-    let reversing = false;
+    // Seamless native loop — restarts instantly when the video ends.
+    const startForward = () =>
+      video.play().catch((e) => console.error('[Hero] play() failed:', e));
 
-    // ── Reverse phase ────────────────────────────────────────────────────────
-    // Only runs after a full forward pass so the entire clip is in the buffer,
-    // which makes every currentTime seek effectively instant.
-    const reverseStep = (ts: number) => {
-      if (lastTs === null) lastTs = ts;
-      const delta = (ts - lastTs) / 1000;
-      lastTs = ts;
-
-      // Tab was hidden — reset clock so we don't jump
-      if (delta > 0.1) {
-        lastTs = ts;
-        rafId = requestAnimationFrame(reverseStep);
-        return;
-      }
-
-      const next = video.currentTime - delta;
-
-      if (next <= 0.05) {
-        // Reverse complete — hand back to native forward playback
-        reversing = false;
-        video.currentTime = 0;
-        lastTs = null;
-        video.play().catch((e) =>
-          console.error('[Hero] play() after reverse failed:', e)
-        );
-        return; // RAF stops; play() is now driving
-      }
-
-      video.currentTime = next;
-      rafId = requestAnimationFrame(reverseStep);
-    };
-
-    // ── Forward phase monitor ────────────────────────────────────────────────
-    // Intercept 150 ms before the clip ends so we never enter the "ended"
-    // state (which can produce a brief black frame on some browsers).
-    const onTimeUpdate = () => {
-      if (reversing || !video.duration) return;
-      if (video.currentTime >= video.duration - 0.15) {
-        reversing = true;
-        video.pause();
-        video.currentTime = video.duration - 0.15;
-        lastTs = null;
-        rafId = requestAnimationFrame(reverseStep);
-      }
-    };
-
-    // ── Error & visibility helpers ───────────────────────────────────────────
     const onError = () =>
-      console.error(
-        '[Hero] Video error — code:',
-        video.error?.code,
-        'message:',
-        video.error?.message
-      );
+      console.error('[Hero] Video error — code:', video.error?.code, 'message:', video.error?.message);
 
     const onVisibility = () => {
-      if (document.visibilityState === 'visible') lastTs = null;
+      if (document.visibilityState === 'visible') startForward();
     };
 
-    video.addEventListener('timeupdate', onTimeUpdate);
     video.addEventListener('error', onError);
     document.addEventListener('visibilitychange', onVisibility);
-
-    // ── Kick off forward playback ────────────────────────────────────────────
-    const startForward = () =>
-      video.play().catch((e) =>
-        console.error('[Hero] Initial play() failed:', e)
-      );
 
     if (video.readyState >= 2) {
       startForward();
@@ -95,8 +39,7 @@ export default function Hero() {
     }
 
     return () => {
-      cancelAnimationFrame(rafId);
-      video.removeEventListener('timeupdate', onTimeUpdate);
+      video.removeEventListener('loadeddata', startForward);
       video.removeEventListener('error', onError);
       document.removeEventListener('visibilitychange', onVisibility);
     };
@@ -119,6 +62,7 @@ export default function Hero() {
         className="absolute inset-0 w-full h-full object-cover"
         src="/herovid3.mp4"
         muted
+        loop
         playsInline
         preload="auto"
       />
@@ -139,8 +83,11 @@ export default function Hero() {
           transition={{ duration: 1.2, ease: 'easeOut', delay: 0.2 }}
         >
           <div className="w-10 h-px bg-[#FDC921]/60" />
-          <span className="font-sans text-[10px] tracking-[0.5em] text-white/50 uppercase">
-            Atelier · Depuis 2012
+          <span
+            className="font-sans text-[10px] tracking-[0.5em] text-white/90 uppercase"
+            style={{ textShadow: '0 1px 12px rgba(0,0,0,0.55)' }}
+          >
+            {t('hero.badge')}
           </span>
           <div className="w-10 h-px bg-[#FDC921]/60" />
         </motion.div>
@@ -170,20 +117,22 @@ export default function Hero() {
         </div>
 
         <motion.p
-          className="font-sans text-white/55 text-sm tracking-[0.22em] uppercase mb-1"
+          className="font-sans text-white text-sm tracking-[0.22em] uppercase mb-1"
+          style={{ textShadow: '0 1px 12px rgba(0,0,0,0.55)' }}
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: 'easeOut', delay: 0.85 }}
         >
-          Traditional Cakes &amp; Fine Pastries
+          {t('hero.subtitle')}
         </motion.p>
         <motion.p
-          className="font-sans text-white/35 text-xs tracking-[0.18em] uppercase mb-14"
+          className="font-sans text-white/75 text-xs tracking-[0.18em] uppercase mb-14"
+          style={{ textShadow: '0 1px 12px rgba(0,0,0,0.5)' }}
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: 'easeOut', delay: 0.95 }}
         >
-          Crafted with Passion Since 2012
+          {t('hero.tagline')}
         </motion.p>
 
         <motion.div
@@ -193,20 +142,20 @@ export default function Hero() {
           transition={{ duration: 1.2, ease: 'easeOut', delay: 1.1 }}
         >
           <Link
-            href="/collection"
+            href={`/${locale}/collection`}
             className="group relative inline-flex items-center justify-center px-10 py-[14px] border border-[#FDC921] font-sans text-[11px] tracking-[0.4em] text-white uppercase overflow-hidden hover:shadow-[0_0_28px_rgba(253,201,33,0.35)] transition-shadow duration-500"
           >
             <span className="relative z-10 group-hover:text-[#2E2118] transition-colors duration-500">
-              Découvrir la Collection
+              {t('hero.discover')}
             </span>
             <span className="absolute inset-0 bg-[#FDC921] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
           </Link>
 
           <Link
-            href="/contact"
+            href={`/${locale}#contact`}
             className="inline-flex items-center justify-center px-10 py-[14px] border border-white/25 font-sans text-[11px] tracking-[0.4em] text-white/60 uppercase hover:border-white/60 hover:text-white transition-all duration-500"
           >
-            Nous Contacter
+            {t('hero.contact')}
           </Link>
         </motion.div>
       </motion.div>
@@ -218,7 +167,7 @@ export default function Hero() {
         transition={{ duration: 1.2, ease: 'easeOut', delay: 1.8 }}
       >
         <span className="font-sans text-[9px] tracking-[0.5em] text-white/30 uppercase">
-          Scroll
+          {t('hero.scroll')}
         </span>
         <div className="relative w-px h-12 overflow-hidden bg-white/10">
           <motion.div

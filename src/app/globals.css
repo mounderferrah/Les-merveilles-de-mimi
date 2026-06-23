@@ -64,6 +64,36 @@ html.lenis, html.lenis body {
   font-family: 'Playfair Display', Georgia, serif;
 }
 
+/* Arabic typography overrides */
+:lang(ar) .font-serif,
+[lang="ar"] .font-serif {
+  font-family: 'Noto Naskh Arabic', 'IBM Plex Sans Arabic', serif;
+}
+
+:lang(ar) .font-sans,
+[lang="ar"] .font-sans {
+  font-family: 'IBM Plex Sans Arabic', 'Noto Naskh Arabic', sans-serif;
+}
+
+:lang(ar) body,
+[lang="ar"] body {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+/* Arabic: remove letter-spacing (looks wrong on Arabic script) */
+:lang(ar) [class*="tracking-"],
+[lang="ar"] [class*="tracking-"] {
+  letter-spacing: 0;
+}
+
+/* RTL: flip left border on blockquotes */
+[dir="rtl"] .rtl-border-flip {
+  border-left: none;
+  border-right: 2px solid #FDC921;
+  padding-left: 0;
+  padding-right: 1.5rem;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 4px;

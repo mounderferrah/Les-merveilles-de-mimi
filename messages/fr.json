@@ -1,6 +1,6 @@
 {
   "meta.home.title": "Les Merveilles de Mimi — Pâtisseries Artisanales",
-  "meta.home.desc": "Pâtisseries artisanales d'exception depuis 2012. Gâteaux traditionnels, spécialités aux pistaches et boîtes cadeaux.",
+  "meta.home.desc": "Pâtisseries artisanales d'exception depuis 2010. Gâteaux traditionnels, spécialités aux pistaches et boîtes cadeaux.",
 
   "nav.home": "ACCUEIL",
   "nav.collection": "COLLECTION",
@@ -12,9 +12,9 @@
   "preloader.tagline": "Tradition • Passion • Raffinement",
   "preloader.enter": "Entrer",
 
-  "hero.badge": "Atelier · Depuis 2012",
+  "hero.badge": "Atelier · Depuis 2010",
   "hero.subtitle": "Traditional Cakes & Fine Pastries",
-  "hero.tagline": "Crafted with Passion Since 2012",
+  "hero.tagline": "Crafted with Passion Since 2010",
   "hero.discover": "Découvrir la Collection",
   "hero.contact": "Nous Contacter",
   "hero.scroll": "Scroll",
@@ -24,7 +24,7 @@
   "story.title_italic": "Douce",
   "story.title_suffix": "Tradition",
   "story.body1": "Depuis plus de seize ans, Les Merveilles de Mimi crée des pâtisseries traditionnelles et des gâteaux d'exception, mêlant héritage, élégance et savoir-faire artisanal.",
-  "story.founded": "Fondé avec passion, 2012",
+  "story.founded": "Fondé avec passion, 2010",
   "story.body2": "Chaque pièce est façonnée à la main avec passion et souci du détail, transformant chaque célébration en un moment inoubliable.",
   "story.quote": "L'art de la pâtisserie est l'art de rendre les moments précieux.",
 
@@ -63,7 +63,7 @@
 
   "collection.badge": "Galerie des Créations",
   "collection.title": "Collection",
-  "collection.subtitle": "Chaque pièce, façonnée à la main · Depuis 2012",
+  "collection.subtitle": "Chaque pièce, façonnée à la main · Depuis 2010",
   "filter.all": "Tous",
   "filter.traditional": "Gâteaux Traditionnels",
   "filter.pistachio": "Spécialités aux Pistaches",

@@ -93,7 +93,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href={`/${locale}`} className="flex flex-col leading-none group">
           <span
-            className="font-serif text-[1.05rem] font-light tracking-[0.08em] transition-all duration-500 group-hover:opacity-70"
+            className="brand-latin font-serif text-[1.05rem] font-light tracking-[0.08em] transition-all duration-500 group-hover:opacity-70"
             style={{
               color:      onHero ? '#FFFFFF' : '#2E2118',
               textShadow: onHero ? '0 1px 12px rgba(0,0,0,0.5)' : 'none',
@@ -103,7 +103,7 @@ export default function Navbar() {
             Les Merveilles
           </span>
           <span
-            className="font-serif text-xs italic tracking-[0.2em]"
+            className="brand-latin font-serif text-xs italic tracking-[0.2em]"
             style={{
               color:      '#FDC921',
               textShadow: onHero ? '0 1px 12px rgba(0,0,0,0.4)' : 'none',

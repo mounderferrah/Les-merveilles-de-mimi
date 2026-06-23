@@ -1,6 +1,6 @@
 {
   "meta.home.title": "Les Merveilles de Mimi — Artisan Pastries",
-  "meta.home.desc": "Exceptional handcrafted pastries since 2012. Traditional cakes, pistachio specialties and gift boxes.",
+  "meta.home.desc": "Exceptional handcrafted pastries since 2010. Traditional cakes, pistachio specialties and gift boxes.",
 
   "nav.home": "HOME",
   "nav.collection": "COLLECTION",
@@ -12,9 +12,9 @@
   "preloader.tagline": "Tradition • Passion • Refinement",
   "preloader.enter": "Enter",
 
-  "hero.badge": "Atelier · Since 2012",
+  "hero.badge": "Atelier · Since 2010",
   "hero.subtitle": "Traditional Cakes & Fine Pastries",
-  "hero.tagline": "Crafted with Passion Since 2012",
+  "hero.tagline": "Crafted with Passion Since 2010",
   "hero.discover": "Discover the Collection",
   "hero.contact": "Contact Us",
   "hero.scroll": "Scroll",
@@ -24,7 +24,7 @@
   "story.title_italic": "Sweet",
   "story.title_suffix": "Tradition",
   "story.body1": "For more than sixteen years, Les Merveilles de Mimi has crafted traditional pastries and exquisite cakes, blending heritage, elegance and artisan expertise.",
-  "story.founded": "Founded with passion, 2012",
+  "story.founded": "Founded with passion, 2010",
   "story.body2": "Each piece is handcrafted with passion and attention to detail, transforming every celebration into an unforgettable moment.",
   "story.quote": "The art of pastry is the art of making moments precious.",
 
@@ -63,7 +63,7 @@
 
   "collection.badge": "Gallery of Creations",
   "collection.title": "Collection",
-  "collection.subtitle": "Each piece, handcrafted · Since 2012",
+  "collection.subtitle": "Each piece, handcrafted · Since 2010",
   "filter.all": "All",
   "filter.traditional": "Traditional Pastries",
   "filter.pistachio": "Pistachio Specialties",

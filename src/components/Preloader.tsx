@@ -234,12 +234,12 @@ export default function Preloader({ onEnter }: { onEnter: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h1 className="font-serif text-[clamp(2.8rem,8vw,7rem)] font-light leading-[0.95] tracking-[0.06em] text-[#2E2118]">
+          <h1 className="brand-latin font-serif text-[clamp(2.8rem,8vw,7rem)] font-light leading-[0.95] tracking-[0.06em] text-[#2E2118]">
             Les Merveilles
           </h1>
           <div className="flex items-center gap-3 mt-2 justify-center">
             <div className="w-8 h-px bg-[#FDC921]" />
-            <h2 className="font-serif text-[clamp(1.8rem,5vw,4.5rem)] font-light tracking-[0.12em] text-[#2E2118] italic">
+            <h2 className="brand-latin font-serif text-[clamp(1.8rem,5vw,4.5rem)] font-light tracking-[0.12em] text-[#2E2118] italic">
               de Mimi
             </h2>
             <div className="w-8 h-px bg-[#FDC921]" />

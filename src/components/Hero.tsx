@@ -8,6 +8,7 @@ import { useT, useLocale } from '@/i18n';
 export default function Hero() {
   const t = useT();
   const locale = useLocale();
+  const isAr = locale === 'ar'; // Arabic script needs larger sizes than tiny Latin labels
   const videoRef = useRef<HTMLVideoElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -84,7 +85,7 @@ export default function Hero() {
         >
           <div className="w-10 h-px bg-[#FDC921]/60" />
           <span
-            className="font-sans text-[10px] tracking-[0.5em] text-white/90 uppercase"
+            className={`font-sans tracking-[0.5em] text-white/90 uppercase ${isAr ? 'text-[15px]' : 'text-[10px]'}`}
             style={{ textShadow: '0 1px 12px rgba(0,0,0,0.55)' }}
           >
             {t('hero.badge')}
@@ -94,7 +95,7 @@ export default function Hero() {
 
         <div className="overflow-hidden mb-1">
           <motion.h1
-            className="font-serif text-white font-light leading-[0.88] tracking-[0.04em]"
+            className="brand-latin font-serif text-white font-light leading-[0.88] tracking-[0.04em]"
             style={{ fontSize: 'clamp(4rem, 12vw, 13rem)' }}
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
@@ -106,7 +107,7 @@ export default function Hero() {
 
         <div className="overflow-hidden mb-10">
           <motion.h1
-            className="font-serif text-white italic font-light leading-[0.88] tracking-[0.08em]"
+            className="brand-latin font-serif text-white italic font-light leading-[0.88] tracking-[0.08em]"
             style={{ fontSize: 'clamp(2.8rem, 8vw, 9rem)' }}
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
@@ -117,7 +118,7 @@ export default function Hero() {
         </div>
 
         <motion.p
-          className="font-sans text-white text-sm tracking-[0.22em] uppercase mb-1"
+          className={`font-sans text-white tracking-[0.22em] uppercase mb-1 ${isAr ? 'text-xl md:text-2xl' : 'text-sm'}`}
           style={{ textShadow: '0 1px 12px rgba(0,0,0,0.55)' }}
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -126,7 +127,7 @@ export default function Hero() {
           {t('hero.subtitle')}
         </motion.p>
         <motion.p
-          className="font-sans text-white/75 text-xs tracking-[0.18em] uppercase mb-14"
+          className={`font-sans text-white/75 tracking-[0.18em] uppercase mb-14 ${isAr ? 'text-base md:text-lg' : 'text-xs'}`}
           style={{ textShadow: '0 1px 12px rgba(0,0,0,0.5)' }}
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}

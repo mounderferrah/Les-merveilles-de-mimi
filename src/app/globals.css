@@ -70,6 +70,14 @@ html.lenis, html.lenis body {
   font-family: 'Noto Naskh Arabic', 'IBM Plex Sans Arabic', serif;
 }
 
+/* The Latin "Les Merveilles de Mimi" wordmark keeps its Latin serif even under
+   the Arabic locale — the Arabic font's taller metrics get clipped by the tight
+   line-height of the hero title. */
+:lang(ar) .brand-latin,
+[lang="ar"] .brand-latin {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+}
+
 :lang(ar) .font-sans,
 [lang="ar"] .font-sans {
   font-family: 'IBM Plex Sans Arabic', 'Noto Naskh Arabic', sans-serif;

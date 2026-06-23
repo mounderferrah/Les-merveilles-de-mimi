@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
 
   return {
     title: messages['meta.home.title'] ?? 'Les Merveilles de Mimi',
-    description: messages['meta.home.desc'] ?? 'Pâtisseries artisanales depuis 2012.',
+    description: messages['meta.home.desc'] ?? 'Pâtisseries artisanales depuis 2010.',
     alternates: {
       canonical: `${base}/${locale}`,
       languages: {

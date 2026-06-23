@@ -94,7 +94,7 @@ export default function Story() {
 
             <div className="mt-10 flex items-center gap-6">
               <div className="w-16 h-px bg-[#FDC921]" />
-              <span className="font-serif italic text-sm text-[#2E2118]/40">
+              <span className="font-serif italic text-base md:text-lg text-[#2E2118]/70">
                 {t('story.founded')}
               </span>
             </div>

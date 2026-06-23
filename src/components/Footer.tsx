@@ -67,10 +67,10 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="mb-6">
-              <h3 className="font-serif text-2xl font-light text-[#FFFDF7] tracking-wide">
+              <h3 className="brand-latin font-serif text-2xl font-light text-[#FFFDF7] tracking-wide">
                 Les Merveilles
               </h3>
-              <p className="font-serif italic text-[#FDC921] text-sm">de Mimi</p>
+              <p className="brand-latin font-serif italic text-[#FDC921] text-sm">de Mimi</p>
             </div>
             <p className="font-sans text-xs leading-[2] text-[#FFFDF7]/30 tracking-wide">
               {t('footer.tagline')}

@@ -29,32 +29,31 @@ export default function LanguageSwitcher({ mobile = false, onHero = false }: Lan
     router.push(`/${newLocale}${path === '/' ? '' : path}`);
   }
 
-  // Separator color adapts to background
+  // Separator color adapts to background. The mobile menu overlay is cream,
+  // so the mobile switcher uses the dark palette (not the dark-video one).
   const separatorColor = mobile
-    ? 'rgba(255,255,255,0.30)'
+    ? 'rgba(46,33,24,0.25)'
     : onHero
     ? 'rgba(255,255,255,0.30)'
     : 'rgba(46,33,24,0.20)';
 
   // Inactive label color adapts to background
   const inactiveColor = mobile
-    ? 'rgba(255,255,255,0.55)'
+    ? '#7A6A5A'
     : onHero
     ? 'rgba(255,255,255,0.55)'
     : '#7A6A5A';
 
   // Hover color adapts to background
-  const hoverClass = mobile || onHero ? 'hover:text-[#FFFDF7]' : 'hover:text-[#2E2118]';
+  const hoverClass = !mobile && onHero ? 'hover:text-[#FFFDF7]' : 'hover:text-[#2E2118]';
 
   if (mobile) {
     return (
       <div
         className="flex items-center gap-3 px-5 py-2.5 rounded-full"
         style={{
-          background: 'rgba(255,255,255,0.12)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255,255,255,0.15)',
+          background: 'rgba(46,33,24,0.04)',
+          border: '1px solid rgba(46,33,24,0.12)',
         }}
       >
         {LOCALES.map((l, i) => (

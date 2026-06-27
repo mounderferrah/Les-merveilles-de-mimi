@@ -69,6 +69,9 @@ export default function Navbar() {
 
   const localePath = stripLocale(pathname);
   const onHero = localePath === '/' && !scrolled;
+  // The mobile menu overlay is cream, so the logo + hamburger must go dark while
+  // it's open even when we're on the (dark) hero.
+  const navLight = onHero && !open;
 
   function isActive(link: NavLink): boolean {
     if (link.section === null) return localePath === '/collection';
@@ -95,8 +98,8 @@ export default function Navbar() {
           <span
             className="brand-latin font-serif text-[1.05rem] font-light tracking-[0.08em] transition-all duration-500 group-hover:opacity-70"
             style={{
-              color:      onHero ? '#FFFFFF' : '#2E2118',
-              textShadow: onHero ? '0 1px 12px rgba(0,0,0,0.5)' : 'none',
+              color:      navLight ? '#FFFFFF' : '#2E2118',
+              textShadow: navLight ? '0 1px 12px rgba(0,0,0,0.5)' : 'none',
               transition: 'color 300ms ease-out, text-shadow 300ms ease-out',
             }}
           >
@@ -106,7 +109,7 @@ export default function Navbar() {
             className="brand-latin font-serif text-xs italic tracking-[0.2em]"
             style={{
               color:      '#FDC921',
-              textShadow: onHero ? '0 1px 12px rgba(0,0,0,0.4)' : 'none',
+              textShadow: navLight ? '0 1px 12px rgba(0,0,0,0.4)' : 'none',
               transition: 'text-shadow 300ms ease-out',
             }}
           >
@@ -178,7 +181,7 @@ export default function Navbar() {
             <motion.span
               key={pos}
               className="w-6 h-px block"
-              style={{ background: onHero ? '#FFFFFF' : '#2E2118' }}
+              style={{ background: navLight ? '#FFFFFF' : '#2E2118' }}
               animate={
                 idx === 0 ? (open ? { rotate: 45,  y: 6  } : { rotate: 0, y: 0 }) :
                 idx === 1 ? (open ? { opacity: 0 } : { opacity: 1 }) :

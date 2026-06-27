@@ -68,7 +68,7 @@ export default function Signature() {
     >
       {/* Layer 2 — Ramadan background image, fitted to the section, kept clear.
           Fainter on mobile so the gold lamp doesn't blend with the accent text. */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none opacity-[0.4] md:opacity-95" aria-hidden="true">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none opacity-[0.85] md:opacity-95" aria-hidden="true">
         <Image
           src="/ramadan.png"
           alt=""
@@ -216,7 +216,8 @@ export default function Signature() {
         >
           {t('signature.text')}
           <br />
-          <span className="text-[#C4956A]">{t('signature.accent')}</span>
+          {/* Stronger brown on mobile (reads over the lamp); tan accent on desktop */}
+          <span className="text-[#5C3D2E] md:text-[#C4956A]">{t('signature.accent')}</span>
         </motion.p>
 
         <motion.div

@@ -66,8 +66,9 @@ export default function Signature() {
       className="relative overflow-hidden px-6 py-28 md:py-0 md:min-h-[60vw] flex items-center justify-center"
       style={{ background: '#F5EDD9' }}
     >
-      {/* Layer 2 — Ramadan background image, fitted to the section, kept clear */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
+      {/* Layer 2 — Ramadan background image, fitted to the section, kept clear.
+          Fainter on mobile so the gold lamp doesn't blend with the accent text. */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none opacity-[0.4] md:opacity-95" aria-hidden="true">
         <Image
           src="/ramadan.png"
           alt=""
@@ -75,16 +76,13 @@ export default function Signature() {
           sizes="100vw"
           quality={90}
           className="object-cover"
-          style={{
-            objectPosition: 'center right',
-            opacity: 0.95,
-          }}
+          style={{ objectPosition: 'center right' }}
         />
       </div>
 
       {/* Soft radial light glow behind the text — subtle, just enough for legibility */}
       <div
-        className="absolute left-[38%] top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        className="absolute left-1/2 md:left-[38%] top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
         style={{
           width: '55%',
           height: '60%',

@@ -5,16 +5,12 @@ import { LOCALES, type Locale } from '@/i18n/config';
 const DEFAULT_LOCALE: Locale = 'fr';
 
 function getLocale(request: NextRequest): Locale {
-  // 1. Saved cookie preference
+  // Saved cookie preference wins (set when the user switches language);
+  // otherwise everyone defaults to French — the site's primary language.
   const cookie = request.cookies.get('NEXT_LOCALE')?.value;
   if (cookie && LOCALES.includes(cookie as Locale)) {
     return cookie as Locale;
   }
-
-  // 2. Accept-Language header — first matching locale wins
-  const acceptLang = request.headers.get('accept-language') ?? '';
-  if (/\bar\b/i.test(acceptLang)) return 'ar';
-  if (/\ben\b/i.test(acceptLang)) return 'en';
 
   return DEFAULT_LOCALE;
 }

@@ -8,15 +8,15 @@ import { useT } from '@/i18n';
 // Files live in /public/elements/. Weighted so the single pistachio, almond and
 // date appear less often — occasional premium accents.
 const INGREDIENT_IMAGES: { src: string; weight: number }[] = [
-  { src: '/elements/nut.png', weight: 10 },
-  { src: '/elements/rosebud.png', weight: 10 },
-  { src: '/elements/jasmine.png', weight: 8 },
-  { src: '/elements/rose-petal.png', weight: 8 },
-  { src: '/elements/star-anise.png', weight: 8 },
-  { src: '/elements/cinnamon-stick.png', weight: 7 },
-  { src: '/elements/pistachio-single.png', weight: 4 }, // premium accent
-  { src: '/elements/almond-single.png', weight: 4 }, // premium accent
-  { src: '/elements/date-single.png', weight: 3 }, // premium accent
+  { src: '/elements/nut.webp', weight: 10 },
+  { src: '/elements/rosebud.webp', weight: 10 },
+  { src: '/elements/jasmine.webp', weight: 8 },
+  { src: '/elements/rose-petal.webp', weight: 8 },
+  { src: '/elements/star-anise.webp', weight: 8 },
+  { src: '/elements/cinnamon-stick.webp', weight: 7 },
+  { src: '/elements/pistachio-single.webp', weight: 4 }, // premium accent
+  { src: '/elements/almond-single.webp', weight: 4 }, // premium accent
+  { src: '/elements/date-single.webp', weight: 3 }, // premium accent
 ];
 
 const TOTAL_WEIGHT = INGREDIENT_IMAGES.reduce((sum, x) => sum + x.weight, 0);
@@ -33,15 +33,15 @@ function pickImage(): string {
 // Per-ingredient size character — large: dates / cinnamon / walnuts,
 // medium: single pistachio / almond / star anise, small: buds & flowers.
 const SIZE_MULTIPLIER: Record<string, number> = {
-  '/elements/date-single.png': 1.3, // large
-  '/elements/cinnamon-stick.png': 1.25, // large
-  '/elements/nut.png': 1.15, // large
-  '/elements/star-anise.png': 0.95, // medium
-  '/elements/pistachio-single.png': 0.9, // medium
-  '/elements/almond-single.png': 0.9, // medium
-  '/elements/jasmine.png': 0.7, // small
-  '/elements/rosebud.png': 0.65, // small
-  '/elements/rose-petal.png': 0.5, // small
+  '/elements/date-single.webp': 1.3, // large
+  '/elements/cinnamon-stick.webp': 1.25, // large
+  '/elements/nut.webp': 1.15, // large
+  '/elements/star-anise.webp': 0.95, // medium
+  '/elements/pistachio-single.webp': 0.9, // medium
+  '/elements/almond-single.webp': 0.9, // medium
+  '/elements/jasmine.webp': 0.7, // small
+  '/elements/rosebud.webp': 0.65, // small
+  '/elements/rose-petal.webp': 0.5, // small
 };
 
 type Layer = 'background' | 'middle' | 'foreground';

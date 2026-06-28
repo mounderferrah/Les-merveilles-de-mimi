@@ -50,7 +50,7 @@ export default function Footer() {
   const locale = useLocale();
 
   return (
-    <footer id="contact" className="bg-[#1E0E07] py-20 px-6 relative overflow-hidden">
+    <footer id="contact" className="bg-[#1E0E07] py-14 md:py-20 px-6 relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-[#FDC921]/20" />
 
       <div
@@ -62,10 +62,10 @@ export default function Footer() {
       />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="grid md:grid-cols-3 gap-16 md:gap-8 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10 md:gap-8 mb-10 md:mb-16">
 
           {/* Brand */}
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <div className="mb-6">
               <h3 className="brand-latin font-serif text-2xl font-light text-[#FFFDF7] tracking-wide">
                 Les Merveilles
@@ -139,15 +139,26 @@ export default function Footer() {
               </div>
             </div>
 
+            {/* Desktop WhatsApp CTA (inside the contact column) */}
             <a
               href="https://wa.me/213559315935"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-3 border border-[#FDC921]/20 px-6 py-3 font-sans text-[10px] tracking-[0.35em] text-[#FDC921] uppercase hover:bg-[#FDC921] hover:text-[#2E2118] hover:border-[#FDC921] transition-all duration-500"
+              className="mt-8 hidden md:inline-flex items-center gap-3 border border-[#FDC921]/20 px-6 py-3 font-sans text-[10px] tracking-[0.35em] text-[#FDC921] uppercase hover:bg-[#FDC921] hover:text-[#2E2118] hover:border-[#FDC921] transition-all duration-500"
             >
               {t('footer.whatsapp.cta')}
             </a>
           </div>
+
+          {/* Mobile WhatsApp CTA — full-width row so it isn't cramped in a half column */}
+          <a
+            href="https://wa.me/213559315935"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="col-span-2 md:hidden flex items-center justify-center gap-3 border border-[#FDC921]/20 px-6 py-3.5 font-sans text-[10px] tracking-[0.3em] text-[#FDC921] uppercase hover:bg-[#FDC921] hover:text-[#2E2118] hover:border-[#FDC921] transition-all duration-500"
+          >
+            {t('footer.whatsapp.cta')}
+          </a>
         </div>
 
         {/* Bottom bar */}

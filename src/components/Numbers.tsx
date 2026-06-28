@@ -18,22 +18,26 @@ function Counter({ to, suffix, inView }: { to: number; suffix: string; inView: b
 
   useEffect(() => {
     if (!inView) return;
-    let start = 0;
-    const end = to;
-    const duration = 2000;
-    const increment = end / (duration / 16);
+    let raf = 0;
+    let startTs = 0;
+    const duration = 1800;
 
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= end) {
-        setCount(end);
-        clearInterval(timer);
+    // Time-based with requestAnimationFrame — reliable on mobile even under load
+    // or when frames drop (it derives the value from elapsed time, never stalls).
+    const tick = (ts: number) => {
+      if (!startTs) startTs = ts;
+      const progress = Math.min((ts - startTs) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      setCount(Math.round(to * eased));
+      if (progress < 1) {
+        raf = requestAnimationFrame(tick);
       } else {
-        setCount(Math.floor(start));
+        setCount(to);
       }
-    }, 16);
+    };
 
-    return () => clearInterval(timer);
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, [inView, to]);
 
   return <span>{count}{suffix}</span>;

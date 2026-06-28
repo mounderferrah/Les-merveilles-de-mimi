@@ -108,9 +108,9 @@ export default function Navbar() {
           <span
             className="brand-latin font-serif text-xs italic tracking-[0.2em]"
             style={{
-              color:      '#FDC921',
+              color:      navLight ? '#FDC921' : '#9A6E0F',
               textShadow: navLight ? '0 1px 12px rgba(0,0,0,0.4)' : 'none',
-              transition: 'text-shadow 300ms ease-out',
+              transition: 'color 300ms ease-out, text-shadow 300ms ease-out',
             }}
           >
             de Mimi
@@ -171,26 +171,29 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden flex flex-col gap-[5px] p-2"
-          aria-label="Menu"
-        >
-          {(['top', 'mid', 'bot'] as const).map((pos, idx) => (
-            <motion.span
-              key={pos}
-              className="w-6 h-px block"
-              style={{ background: navLight ? '#FFFFFF' : '#2E2118' }}
-              animate={
-                idx === 0 ? (open ? { rotate: 45,  y: 6  } : { rotate: 0, y: 0 }) :
-                idx === 1 ? (open ? { opacity: 0 } : { opacity: 1 }) :
-                            (open ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 })
-              }
-              transition={{ duration: 0.3 }}
-            />
-          ))}
-        </button>
+        {/* Mobile: quick language switch + hamburger */}
+        <div className="flex items-center gap-4 md:hidden">
+          <LanguageSwitcher onHero={navLight} compact />
+          <button
+            onClick={() => setOpen(!open)}
+            className="flex flex-col gap-[5px] p-2"
+            aria-label="Menu"
+          >
+            {(['top', 'mid', 'bot'] as const).map((pos, idx) => (
+              <motion.span
+                key={pos}
+                className="w-6 h-px block"
+                style={{ background: navLight ? '#FFFFFF' : '#2E2118' }}
+                animate={
+                  idx === 0 ? (open ? { rotate: 45,  y: 6  } : { rotate: 0, y: 0 }) :
+                  idx === 1 ? (open ? { opacity: 0 } : { opacity: 1 }) :
+                              (open ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 })
+                }
+                transition={{ duration: 0.3 }}
+              />
+            ))}
+          </button>
+        </div>
       </motion.nav>
 
       {/* Mobile full-screen menu */}
@@ -230,7 +233,7 @@ export default function Navbar() {
           href="https://wa.me/213559315935"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-serif text-sm tracking-[0.3em] text-[#2E2118]/60 uppercase hover:text-[#FDC921] transition-colors duration-300"
+          className="inline-flex items-center justify-center px-12 py-4 bg-[#FDC921] text-[#2E2118] font-sans text-xs tracking-[0.3em] uppercase shadow-[0_10px_30px_rgba(253,201,33,0.3)] hover:bg-[#FDD85D] hover:scale-[1.03] transition-all duration-300"
         >
           Commander
         </a>

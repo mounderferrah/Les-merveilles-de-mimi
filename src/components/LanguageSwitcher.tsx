@@ -9,6 +9,13 @@ const LOCALE_LABELS: Record<Locale, string> = {
   ar: 'العربية',
 };
 
+// Shorter labels for tight spaces (the mobile top bar).
+const LOCALE_LABELS_SHORT: Record<Locale, string> = {
+  fr: 'FR',
+  en: 'EN',
+  ar: 'AR',
+};
+
 function stripLocalePrefix(pathname: string): string {
   return pathname.replace(/^\/(fr|en|ar)/, '') || '/';
 }
@@ -16,9 +23,10 @@ function stripLocalePrefix(pathname: string): string {
 interface LanguageSwitcherProps {
   mobile?: boolean;
   onHero?: boolean; // true = dark hero bg, false = light scrolled navbar
+  compact?: boolean; // short labels (FR/EN/AR) for the mobile top bar
 }
 
-export default function LanguageSwitcher({ mobile = false, onHero = false }: LanguageSwitcherProps) {
+export default function LanguageSwitcher({ mobile = false, onHero = false, compact = false }: LanguageSwitcherProps) {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -76,7 +84,7 @@ export default function LanguageSwitcher({ mobile = false, onHero = false }: Lan
               aria-label={`Switch to ${l}`}
               aria-current={locale === l ? 'true' : undefined}
             >
-              {LOCALE_LABELS[l]}
+              {compact ? LOCALE_LABELS_SHORT[l] : LOCALE_LABELS[l]}
             </button>
           </span>
         ))}
@@ -107,7 +115,7 @@ export default function LanguageSwitcher({ mobile = false, onHero = false }: Lan
             aria-label={`Switch to ${l}`}
             aria-current={locale === l ? 'true' : undefined}
           >
-            {LOCALE_LABELS[l]}
+            {compact ? LOCALE_LABELS_SHORT[l] : LOCALE_LABELS[l]}
           </button>
         </span>
       ))}

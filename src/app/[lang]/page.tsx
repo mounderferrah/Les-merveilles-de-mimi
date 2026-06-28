@@ -42,8 +42,8 @@ export default function Home() {
         <Numbers />
         <RibbonGallery />
         <Signature />
-        <Testimonials />
         <Instagram />
+        <Testimonials />
         <Footer />
       </main>
     </>

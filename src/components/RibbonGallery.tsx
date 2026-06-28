@@ -1,8 +1,8 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform, useMotionValue, useAnimationFrame } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PRODUCTS, EXTS, type Product } from '@/data/products';
@@ -91,6 +91,13 @@ function RibbonCard({ product, collectionHref }: { product: Product; collectionH
 
 // ── One scrolling strip ────────────────────────────────────────────────────────
 
+// Keep a value inside [min, max) by wrapping — used to loop the marquee seamlessly.
+function wrapValue(min: number, max: number, v: number): number {
+  const range = max - min;
+  if (range <= 0) return min;
+  return ((((v - min) % range) + range) % range) + min;
+}
+
 function RibbonStrip({
   items,
   duration,
@@ -104,13 +111,82 @@ function RibbonStrip({
 }) {
   const doubled = [...items, ...items];
 
+  const trackRef = useRef<HTMLDivElement>(null);
+  const baseX = useMotionValue(0);
+  const [half, setHalf] = useState(0); // width of one set of cards (the loop period)
+
+  const dragging = useRef(false);
+  const lastX = useRef(0);
+  const startX = useRef(0);
+  const moved = useRef(false); // true once a drag passes the click-vs-drag threshold
+
+  // Measure one repetition so the loop wraps seamlessly; re-measure on resize.
+  useEffect(() => {
+    const measure = () => {
+      if (trackRef.current) setHalf(trackRef.current.scrollWidth / 2);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [doubled.length]);
+
+  // Rendered position is always wrapped, so dragging or auto-scrolling never runs out of cards.
+  const x = useTransform(baseX, (v) => (half ? wrapValue(-half, 0, v) : v));
+
+  // Auto-scroll at the same speed as before (one set per `duration`s) — paused while dragging.
+  useAnimationFrame((_, delta) => {
+    if (dragging.current || !half) return;
+    const pxPerSec = half / duration;
+    baseX.set(baseX.get() - direction * pxPerSec * (delta / 1000));
+  });
+
+  // Window-level listeners so a drag keeps tracking even if the pointer leaves the
+  // strip (mouse and touch); gated on the dragging flag.
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      if (!dragging.current) return;
+      const dx = e.clientX - lastX.current;
+      lastX.current = e.clientX;
+      baseX.set(baseX.get() + dx);
+      if (Math.abs(e.clientX - startX.current) > 8) moved.current = true;
+    };
+    const onUp = () => {
+      dragging.current = false;
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+    };
+  }, [baseX]);
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    dragging.current = true;
+    moved.current = false;
+    startX.current = e.clientX;
+    lastX.current = e.clientX;
+  };
+  // If the pointer actually dragged, swallow the click so it doesn't open a card.
+  const onClickCapture = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (moved.current) {
+      e.preventDefault();
+      e.stopPropagation();
+      moved.current = false;
+    }
+  };
+
   return (
-    <div className="overflow-x-hidden py-2" dir="ltr">
-      <motion.div
-        className="flex gap-4"
-        animate={{ x: direction === 1 ? ['0%', '-50%'] : ['-50%', '0%'] }}
-        transition={{ duration, repeat: Infinity, ease: 'linear' }}
-      >
+    <div
+      className="overflow-hidden py-2 cursor-grab active:cursor-grabbing select-none"
+      dir="ltr"
+      style={{ touchAction: 'pan-y' }}
+      onPointerDown={onPointerDown}
+      onClickCapture={onClickCapture}
+    >
+      <motion.div ref={trackRef} className="flex gap-4" style={{ x }}>
         {doubled.map((product, i) => (
           <RibbonCard key={`${product.name}-${i}`} product={product} collectionHref={collectionHref} />
         ))}

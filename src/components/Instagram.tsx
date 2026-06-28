@@ -77,12 +77,14 @@ const DESKTOP: { top: number; left: string; width: number; height: number; z: nu
   { top: 395, left: '57%', width: 310, height: 372, z: 2 },
 ];
 
-const MOBILE_OFFSETS = [
-  { ml: '0%',  mr: '18%' },
-  { ml: '20%', mr: '4%'  },
-  { ml: '5%',  mr: '15%' },
-  { ml: '15%', mr: '5%'  },
-  { ml: '3%',  mr: '16%' },
+// Mobile collage — percentage positions inside a portrait container so all five
+// posts are visible at once (the desktop scatter, scaled down to fit one screen).
+const MOBILE: { top: string; left: string; width: string; z: number }[] = [
+  { top: '0%',  left: '1%',  width: '46%', z: 2 },
+  { top: '5%',  left: '55%', width: '40%', z: 1 },
+  { top: '32%', left: '50%', width: '48%', z: 3 },
+  { top: '42%', left: '2%',  width: '45%', z: 2 },
+  { top: '64%', left: '28%', width: '47%', z: 2 },
 ];
 
 const SPARKLES = [
@@ -130,20 +132,22 @@ function PlayButton() {
 
 function GalleryCard({
   painting,
-  desktop,
+  pos,
   inView,
-  index,
 }: {
   painting: Painting;
-  desktop:  typeof DESKTOP[number] | null;
+  pos:      { top: number | string; left: string; width: number | string; height?: number; z: number };
   inView:   boolean;
-  index:    number;
 }) {
   const [imgFailed, setImgFailed] = useState(false);
 
-  const positionStyle: React.CSSProperties = desktop
-    ? { position: 'absolute', top: desktop.top, left: desktop.left, width: desktop.width, zIndex: desktop.z }
-    : { marginLeft: MOBILE_OFFSETS[index].ml, marginRight: MOBILE_OFFSETS[index].mr };
+  const positionStyle: React.CSSProperties = {
+    position: 'absolute',
+    top:      pos.top,
+    left:     pos.left,
+    width:    pos.width,
+    zIndex:   pos.z,
+  };
 
   const shadowBase  = '0 25px 80px rgba(0,0,0,.12)';
   const shadowHover = '0 40px 100px rgba(0,0,0,.22), 0 0 40px rgba(253,201,33,.25)';
@@ -171,8 +175,8 @@ function GalleryCard({
               style={{
                 position:    'relative',
                 width:       '100%',
-                height:      desktop ? desktop.height : undefined,
-                aspectRatio: desktop ? undefined : '4 / 5',
+                height:      pos.height,
+                aspectRatio: pos.height ? undefined : '4 / 5',
               }}
             >
               {!imgFailed ? (
@@ -292,17 +296,17 @@ export default function Instagram() {
           </motion.h2>
         </div>
 
-        {/* Mobile */}
-        <div className="flex flex-col gap-8 lg:hidden">
+        {/* Mobile — scaled collage, all five posts visible on one screen */}
+        <div className="relative lg:hidden mx-auto w-full max-w-[440px]" style={{ aspectRatio: '10 / 16' }}>
           {PAINTINGS.map((painting, i) => (
-            <GalleryCard key={i} painting={painting} desktop={null} inView={inView} index={i} />
+            <GalleryCard key={i} painting={painting} pos={MOBILE[i]} inView={inView} />
           ))}
         </div>
 
         {/* Desktop */}
         <div className="hidden lg:block relative" style={{ height: 856 }}>
           {PAINTINGS.map((painting, i) => (
-            <GalleryCard key={i} painting={painting} desktop={DESKTOP[i]} inView={inView} index={i} />
+            <GalleryCard key={i} painting={painting} pos={DESKTOP[i]} inView={inView} />
           ))}
         </div>
 

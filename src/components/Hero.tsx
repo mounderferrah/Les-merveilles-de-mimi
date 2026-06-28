@@ -56,12 +56,16 @@ export default function Hero() {
   }, [mouseX, mouseY]);
 
   return (
-    <section className="relative h-screen min-h-[700px] overflow-hidden flex items-center justify-center">
+    <section
+      className="relative h-screen min-h-[700px] overflow-hidden flex items-center justify-center"
+      style={{ background: 'linear-gradient(160deg, #2a2017 0%, #15100b 100%)' }}
+    >
 
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover"
         src="/herovid3.mp4"
+        poster="/hero-poster.jpg"
         muted
         loop
         playsInline
